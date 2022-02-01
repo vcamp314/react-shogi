@@ -31,6 +31,7 @@ ReactDOM.render(
     resign={false}
     result={false}
     is_mobile={is_mobile}
+    is_online={true}
   />,
   document.getElementById('root')
 );

@@ -1,7 +1,7 @@
 {
   "name": "react-shogi",
   "version": "0.1.0",
-  "homepage": "http://izumo27.github.io/react-shogi",
+  "homepage": "http://vcamp314.github.io/react-shogi",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.0",
@@ -15,7 +15,7 @@
     "@types/react-dom": "^16.9.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0",
+    "react-scripts": "3.4.1",
     "typescript": "^3.7.4"
   },
   "scripts": {

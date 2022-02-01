@@ -519,6 +519,7 @@ interface IGameProps {
   resign: boolean;
   result: boolean;
   is_mobile: boolean;
+  is_online: boolean;
 }
 
 interface IGameState {
@@ -561,6 +562,7 @@ interface IGameState {
   result: boolean;
   // スマホかどうか
   is_mobile: boolean;
+  is_online: boolean;
 }
 
 export class Game extends React.Component<IGameProps, IGameState> {
@@ -589,6 +591,7 @@ export class Game extends React.Component<IGameProps, IGameState> {
       resign: this.props.resign,
       result: this.props.result,
       is_mobile: this.props.is_mobile,
+      is_online: this.props.is_online,
     };
     this.handlePromotion = this.handlePromotion.bind(this);
     this.handleResign= this.handleResign.bind(this);
@@ -601,13 +604,14 @@ export class Game extends React.Component<IGameProps, IGameState> {
     }
     let clicked_piece: number = this.state.clicked_piece;
     const turn = this.state.turn;
+    const is_online = this.state.is_online;
     let tmp_pos = _.cloneDeep(this.state.current_pos);  // 動かした後の盤面
     const current_black_piece = _.cloneDeep(this.state.current_black_piece);
     const current_white_piece = _.cloneDeep(this.state.current_white_piece);
     // 持ち駒をクリックしたとき
     if(i < Setting.WHITE * 2){
       if(clicked_piece === Setting.UNCLICKED){
-        if((turn ? (i < Setting.WHITE && current_black_piece[i] > 0) : (i >= Setting.WHITE && current_white_piece[i - Setting.WHITE] > 0))){
+        if((turn ? (i < Setting.WHITE && current_black_piece[i] > 0) : (i >= Setting.WHITE && current_white_piece[i - Setting.WHITE] > 0 && !is_online))){
           // 候補の列挙
           // 駒を打つときは王手がかかっていないかと、行き所がないか、二歩、打ち歩詰めをチェックする
           let tmp_control_piece = set_control_piece(true);
@@ -668,7 +672,7 @@ export class Game extends React.Component<IGameProps, IGameState> {
     // 駒を掴んでないとき
     if(this.state.clicked_piece === Setting.UNCLICKED){
       // 手番の駒以外はダメ
-      if(current_pos[x][y].piece_num() === Setting.MT || current_pos[x][y].turn() !== turn){
+      if(current_pos[x][y].piece_num() === Setting.MT || current_pos[x][y].turn() !== turn || (is_online && !turn)){
         return;
       }
       // 候補の列挙
